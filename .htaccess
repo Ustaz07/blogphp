@@ -1,0 +1,5 @@
+# This is 404 Error to show
+
+
+
+ErrorDocument 404 http://localhost/blogphp/404.php
