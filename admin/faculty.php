@@ -150,7 +150,7 @@ include('includes/navbar.php');
                 <td><?php echo $row['description']; ?></td>                
                 <td> <?php echo '<img src="upload/' . $row['image'] . '" width="100px" height="100px" alt="image">' ?></td>
                 <td>
-                  <form action="facultyedit.php" method="POST">
+                  <form action="faculty_edit.php" method="POST">
                     <input type="hidden" name="edit_id" value="<?php echo $row['id']; ?>" >
                     <button type="submit" name="edit_data_btn" class="btn btn-success">EDIT</button>   
                   </form>

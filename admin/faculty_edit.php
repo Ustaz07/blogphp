@@ -39,7 +39,7 @@ include('includes/navbar.php');
             }
 
 
-            if (isset($_POST['faculty_edit_btn'])) {
+            if (isset($_POST['edit_data_btn'])) {
               
                 $id = $_POST['edit_id'];
 
@@ -49,46 +49,48 @@ include('includes/navbar.php');
                 }
 
                 foreach ($result as $row ) {
-                  echo $row['id'];
+                  //echo $row['id'];
 
 ?>
 
 
 
-      <form action="" method="POST">
+      <form action="code.php" method="POST" enctype="multipart/form-data">
 
         <input type="text" name="edit_id" value="<?php echo $row['id']; ?>">
+
+
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" name="edit_name" value="<?php echo $row['name']; ?>" class="form-control" >
+        </div>
+        <div class="form-group">
+          <label for="design">Designation:</label>
+          <input type="text" name="edit_designation" value="<?php echo $row['designation']; ?>" class="form-control" >
+        </div>
+        <div class="form-group">
+          <label for="descrip">Description:</label>
+          <input type="text" name="edit_description" value="<?php echo $row['description']; ?>" class="form-control" >
+        </div>
+        <div class="form-group">
+          <label for="image">Image:</label>
+          <input type="file" name="faculty_image" id="faculty_image" value="<?php echo $row['image']; ?>" class="form-control" >
+        </div>    
+        <div class="">
+          <a href="faculty.php" class="btn btn-danger">Cancel</a>
+
+          <button type="update" name="faculty_update_btn" class="btn btn-primary">Update</button>
+
+    </div>
+
+  </form>
+   
 
 <?php
                 }
             }
               
                   ?>
-        <div class="form-group">
-          <label for="name">Name:</label>
-          <input type="text" name="edit_name" value="" class="form-control" >
-        </div>
-        <div class="form-group">
-          <label for="design">Designation:</label>
-          <input type="text" name="edit_designation" value="" class="form-control" >
-        </div>
-        <div class="form-group">
-          <label for="descrip">Description:</label>
-          <input type="text" name="edit_description" value="" class="form-control" >
-        </div>
-        <div class="form-group">
-          <label for="image">Image:</label>
-          <input type="text" name="edit_image" value="" class="form-control" >
-        </div>    
-        <div class="">
-          <a href="faculty.php" class="btn btn-danger">Cancel</a>
-
-          <button type="update" name="update_aboutusbtn" class="btn btn-primary">Update</button>
-
-    </div>
-
-  </form>
-   
 
 	</div>
 	<!-- End container edit profile -->

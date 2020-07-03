@@ -52,6 +52,40 @@ include('security.php');
 
 
 
+	//Coding for Faculty Edit ------------------------------------------
+
+	if (isset($_POST['faculty_update_btn'])) {
+		$id = $_POST['edit_id'];
+		$edit_name = $_POST['edit_name'];
+		$edit_designation = $_POST['edit_designation'];
+		$edit_description = $_POST['edit_description'];
+		$edit_faculty_image = $_FILES['faculty_image']['name'];
+
+		$result = mysqli_query($connection, "UPDATE faculty SET id='$id', name='$edit_name', designation='$edit_designation', description='$edit_description', image='$edit_faculty_image' WHERE id= '$id' ");
+		  	if (!$result) {
+		  	die("Query failed: ". mysqli_error($connection));
+		}
+
+		if ($result) {
+			//Not that the / has to be infront of upload not at the back....
+			move_uploaded_file($_FILES["faculty_image"]["tmp_name"], "upload/" . basename($_FILES["faculty_image"]["name"]));
+			//echo "Saved";
+			$_SESSION['success'] = "<div class='alert alert-success'><strong>". "Faculty Updated!". "</strong></div>";
+			header('Location: faculty.php');
+
+		} 	else{
+
+			$_SESSION['status'] = "Faculty Not Updated!";
+			header('Location: faculty.php');
+
+		}
+
+
+	}
+
+
+
+
 
 
 	//Coding for Register------------------------------------------

@@ -54,12 +54,7 @@ include('includes/navbar.php');
 
                   ?>
 
-                  <?php
-
-       }
-    }
-    
-    ?>
+                 
 
   <form action="code.php" method="POST">
 
@@ -89,7 +84,13 @@ include('includes/navbar.php');
 
   </form>
  
+  
+   <?php
+
+       }
+    }
     
+    ?>  
   
 
 	</div>
