@@ -88,6 +88,31 @@ include('security.php');
 
 
 
+
+
+//Coding for Faculty Delete ------------------------------------------
+
+if (isset($_POST['faculty_deletebtn'])) {
+
+	$id = $_POST['delete_id'];
+
+	$result = mysqli_query($connection, "DELETE FROM faculty WHERE id='$id' ");
+
+	if ($result) {
+
+		$_SESSION['success'] = "<div class='alert alert-danger'><strong>". "Faculty Deleted!". "</strong></div>";
+		header('Location: faculty.php');
+
+	} else {
+
+		$_SESSION['status'] = "Faculty Not Deleted!";
+		header('Location: faculty.php');
+
+	}
+}
+
+
+
 	//Coding for Register------------------------------------------
 	
 	//$connection = mysqli_connect("localhost", "root", "", "adminpanel");
