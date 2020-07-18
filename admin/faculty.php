@@ -76,14 +76,14 @@ include('includes/navbar.php');
 
                       <div class="form-group">
                         <label for="image">Image:</label>
-                        <input type="file" name="image" class="form-control" required>
+                        <input type="file" name="faculty_image" id="faculty_image" class="form-control" required>
                       </div> 
                            
                     </div>
 
                     <div class="modal-footer">
                         <button type="close" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button name="faculty_btn" type="save" class="btn btn-primary">Save</button>
+                        <button name="faculty_btn" type="submit" class="btn btn-primary">Save</button>
                     </div>
 
                 </form>

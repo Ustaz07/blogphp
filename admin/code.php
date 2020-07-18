@@ -2,49 +2,62 @@
 include('security.php');
 
 
-
-
-
-
 	//Coding for Faculty Add ------------------------------------------
-	if (isset($_POST['faculty_btn'])) {
+	if (isset($_POST['facultyy_btn'])) {
+
 		$name = $_POST['name'];
 		$designation = $_POST['designation'];
 		$description = $_POST['description'];
-		$image = $_FILES['image']['name'];
+		$image = $_FILES['faculty_image']['name'];
 
-		if (file_exists("upload/" .  basename($_FILES["image"]["name"]))) {
-			
-			$store = $_FILES["image"]["name"];
-			$_SESSION['status'] = "File exist! " . $store ;
-			header('Location: faculty.php');
+		$validate_img_extension = $_FILES['faculty_image']['type']=="image/jpg" || $_FILES['faculty_image']['type']=="image/png" || $_FILES['faculty_image']['type']=="image/jpeg";
 
+		// $img_types = array('image/jpg', 'image/png', 'image/jpeg');
+		// $validate_img_extension = in_array($_FILES['faculty_image']['type'], $img_types);
+       
+        
+		
+		if (!$validate_img_extension) {
+
+			if (file_exists("upload/" .  basename($_FILES["faculty_image"]["name"]))) {
+				
+				$store = $_FILES["faculty_image"]["name"];
+				$_SESSION['status'] = "File exist! " . $store ;
+				header('Location: faculty.php');
+
+			} else {
+
+				/*  //If you want to specify the path.....
+				$ImageName = $_FILES['file']['name'];
+				$fileElementName = 'file';
+				$path = 'Users/George/Desktop/uploads/'; 
+				$location = $path . $_FILES['file']['name']; 
+				move_uploaded_file($_FILES['file']['tmp_name'], $location); 
+				*/
+
+				$query = "INSERT INTO faculty (name, designation, description, image) VALUES ('$name', '$designation', '$description', '$image')";
+				$query_run = mysqli_query($connection, $query);
+
+					if ($query_run) {
+						//Not that the / has to be infront of upload not at the back....
+						move_uploaded_file($_FILES["faculty_image"]["tmp_name"], "upload/" . basename($_FILES["faculty_image"]["name"]));
+						//echo "Saved";
+						$_SESSION['success'] = "<div class='alert alert-success'><strong>". "Faculty Added!". "</strong></div>";
+						header('Location: faculty.php');
+
+					} 	else{
+
+						$_SESSION['status'] = "Faculty Not Added!";
+						header('Location: faculty.php');
+
+					}
+
+			}
 		} else {
 
-			/*  //If you want to specify the path.....
-			$ImageName = $_FILES['file']['name'];
-			$fileElementName = 'file';
-			$path = 'Users/George/Desktop/uploads/'; 
-			$location = $path . $_FILES['file']['name']; 
-			move_uploaded_file($_FILES['file']['tmp_name'], $location); 
-			*/
-
-			$query = "INSERT INTO faculty (name, designation, description, image) VALUES ('$name', '$designation', '$description', '$image')";
-			$query_run = mysqli_query($connection, $query);
-
-				if ($query_run) {
-					//Not that the / has to be infront of upload not at the back....
-					move_uploaded_file($_FILES["image"]["tmp_name"], "upload/" . basename($_FILES["image"]["name"]));
-					//echo "Saved";
-					$_SESSION['success'] = "<div class='alert alert-success'><strong>". "Faculty Added!". "</strong></div>";
-					header('Location: faculty.php');
-
-				} 	else{
-
-					$_SESSION['status'] = "Faculty Not Added!";
-					header('Location: faculty.php');
-
-				}
+			$_SESSION['status'] = "Only JPG, PNG, JPEG are allowed" ;
+			header('Location: faculty.php');
+			return;
 
 		}
 
@@ -85,11 +98,6 @@ include('security.php');
 
 
 
-
-
-
-
-
 //Coding for Faculty Delete ------------------------------------------
 
 if (isset($_POST['faculty_deletebtn'])) {
@@ -110,6 +118,12 @@ if (isset($_POST['faculty_deletebtn'])) {
 
 	}
 }
+
+
+
+
+
+
 
 
 
@@ -258,6 +272,8 @@ if (isset($_POST['deletebtn'])) {
 
 
 
+//About Us Insert Button Update Code ..............................................
+
 if (isset($_POST['about_usbtn'])) {
 		$links = $_POST['title'];
 		$sub_title = $_POST['sub_title'];
@@ -294,9 +310,6 @@ if (isset($_POST['about_usbtn'])) {
 	*/
 
 	//}
-
-
-
 
 
 
@@ -350,10 +363,6 @@ if (isset($_POST['update_aboutusbtn'])) {
 
 	//}
 }
-
-
-
-
 
 
 
