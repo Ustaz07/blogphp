@@ -2,82 +2,6 @@
 include('security.php');
 
 
-
-	//Coding for Department Add ------------------------------------------
-	if (isset($_POST['dept_btn'])) {
-		// var_dump($_POST);
-
-		$dept_name = $_POST['dept_name'];
-		$description = $_POST['description'];
-
-		$dept_image = $_FILES['dept_image']['name'];
-
-		
-		$img_types = array('image/jpg', 'image/png', 'image/jpeg');
-		
-		$validate_img_extension = in_array($_FILES['dept_image']['type'], $img_types);
-       
-        
-		//print_r($validate_img_extension);
-		if ($validate_img_extension) {
-
-			if (file_exists("upload/department/" .  basename($_FILES["dept_image"]["name"]))) {
-				
-				$store = $_FILES["dept_image"]["name"];
-				$_SESSION['status'] = "File exist! " . $store ;
-				header('Location: departments.php');
-
-			} else {
-
-				$query = "INSERT INTO dept_category (name, description, image) VALUES ('$dept_name', '$description', '$dept_image')";
-				$query_run = mysqli_query($connection, $query);
-
-					if ($query_run) {
-						//Not that there must be / has to be infront of department not at the back....
-						move_uploaded_file($_FILES["dept_image"]["tmp_name"], "upload/department/" . basename($_FILES["dept_image"]["name"]));
-						//echo "Saved";
-						$_SESSION['success'] = "<div class='alert alert-success'><strong>". "Department Added!". "</strong></div>";
-						header('Location: departments.php');
-
-					} 	else{
-
-						$_SESSION['status'] = "Department Not Added!";
-						header('Location: departments.php');
-
-					}
-
-			}
-			
-		} else {
-
-			$_SESSION['status'] = "Only JPG, PNG, JPEG are allowed" ;
-			header('Location: departments.php');
-			return;
-
-		}
-
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	//Coding for Faculty Add ------------------------------------------
 	if (isset($_POST['faculty_btn'])) {
 
@@ -130,7 +54,6 @@ include('security.php');
 					}
 
 			}
-			
 		} else {
 
 			$_SESSION['status'] = "Only JPG, PNG, JPEG are allowed" ;
@@ -143,8 +66,6 @@ include('security.php');
 
 
 
-
-
 	//Coding for Faculty Edit ------------------------------------------
 
 	if (isset($_POST['faculty_update_btn'])) {
@@ -152,81 +73,55 @@ include('security.php');
 		$edit_name = $_POST['edit_name'];
 		$edit_designation = $_POST['edit_designation'];
 		$edit_description = $_POST['edit_description'];
-		
 		$edit_faculty_image = $_FILES['faculty_image']['name'];
 
+		//The following are 2 method for validation...........
+		// $validate_img_extension = $_FILES['faculty_image']['type']=="image/jpg" || $_FILES['faculty_image']['type']=="image/png" || $_FILES['faculty_image']['type']=="image/jpeg";
 
-		// if ($edit_faculty_image) {
-		// 	die($edit_faculty_image);
-		// }
-
-		// echo "<pre>" . var_dump($_POST) . "</pre>";
+		$img_types = array('image/jpg', 'image/png', 'image/jpeg');
 		
-		// <pre></pre>
-
+		$validate_img_extension = in_array($_FILES['faculty_image']['type'], $img_types);
+       
+        
 		// print_r($validate_img_extension);
 
-		// get_defined_vars($validate_img_extension);
+		// var_dump($validate_img_extension);
+		
+		// gettype($var);
 
-		// gettype($validate_img_extension);
+		echo "<pre>"; print_r(get_defined_vars($validate_img_extension)); echo "</pre>";
 
-		$faculty_result = mysqli_query($connection, "SELECT * FROM faculty WHERE id='$id' ");
-			
-		foreach ($faculty_result as $fa_row) {
-			// echo $fa_row['image'];
-			
-			if ($edit_faculty_image == NULL ) {
-				
-				// Update with existing Image
-				$image_data = $fa_row['image'];
+		// if ($validate_img_extension) {
 
-			} else {
+		// 	$result = mysqli_query($connection, "UPDATE faculty SET id='$id', name='$edit_name', designation='$edit_designation', description='$edit_description', image='$edit_faculty_image' WHERE id= '$id' ");
+		// 	  	if (!$result) {
+		// 	  	die("Query failed: ". mysqli_error($connection));
+		// 	}
 
-				// Update with new Image and delete Old image
-				if ($image_path = "upload/" . $fa_row['image']) {
-					unlink($image_path);
-					$image_data = $edit_faculty_image;
+		// 	if ($result) {
+		// 		//Not that the / has to be infront of upload not at the back....
+		// 		move_uploaded_file($_FILES["faculty_image"]["tmp_name"], "upload/" . basename($_FILES["faculty_image"]["name"]));
+		// 		//echo "Saved";
+		// 		$_SESSION['success'] = "<div class='alert alert-success'><strong>". "Faculty Updated!". "</strong></div>";
+		// 		header('Location: faculty.php');
 
-				}
-				
-			}
-		}
+		// 	} 	else{
 
-		$result = mysqli_query($connection, "UPDATE faculty SET id='$id', name='$edit_name', designation='$edit_designation', description='$edit_description', image='$image_data' WHERE id= '$id' ");
-		  	if (!$result) {
-		  	die("Query Update failed: ". mysqli_error($connection));
-		}
+		// 		$_SESSION['status'] = "Faculty Not Updated!";
+		// 		header('Location: faculty.php');
 
-		if ($result) {
+		// 	}
 
-			if ($edit_faculty_image == NULL ) {
-				
-				// Update with existing Image.............
-				$_SESSION['success'] = "<div class='alert alert-success'><strong>". "Faculty Updated! with existing Image". "</strong></div>";
-				header('Location: faculty.php');
+		// } else {
 
-			} else {
+		// 	$_SESSION['status'] = "Only JPG, PNG, JPEG are allowed, try updating again!" ;
+		// 	header('Location: faculty.php');
+		// 	return;
 
-				// Update with new Image and deleted Old image...........
-				//Not that the / has to be infront of upload not at the back....
-				move_uploaded_file($_FILES["faculty_image"]["tmp_name"], "upload/" . basename($_FILES["faculty_image"]["name"]));
-				//echo "Saved";
-				$_SESSION['success'] = "<div class='alert alert-success'><strong>". "Faculty Updated!". "</strong></div>";
-				header('Location: faculty.php');
+		// }
 
-			}
-			
 
-		} 	else{
-
-			$_SESSION['status'] = "Faculty Not Updated!";
-			header('Location: faculty.php');
-
-		}
-
-	}	
-
-												
+	}
 
 
 
