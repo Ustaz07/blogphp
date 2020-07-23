@@ -69,7 +69,9 @@ include('includes/navbar.php');
     </div>
     <div class="form-group">
       <label for="pwd">Description:</label>
-      <input type="text" name="edit_description" value="<?php echo $row['description']; ?>" class="form-control" >
+
+      <textarea type="text" name="edit_description" value="" rows="7" class="form-control"> <?php echo $row['description']; ?> </textarea>
+
     </div>
     <div class="form-group">
       <label for="links">Links:</label>

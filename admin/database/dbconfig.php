@@ -15,7 +15,7 @@
 
 	if ($dbconfig) {
 
-	  	echo "Database connection success: ";
+	  	echo "</br>" . "Database connected and selected successfully: ";
 
 	} else{
 

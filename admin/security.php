@@ -3,13 +3,13 @@ session_start();
 include('database/dbconfig.php');
 
 if ($dbconfig) {
-	echo "Database Connected";
+	echo "</br>" . "Database Connected for Security";
 } else{
 	header('Location: database/dbconfig.php');
 }
 
 if (!$_SESSION['username']) {
-	header('Location: login.phpp');
+	header('Location: login.php');
 }
 
 

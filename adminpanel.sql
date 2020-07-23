@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 02, 2020 at 01:13 PM
+-- Generation Time: Jul 19, 2020 at 01:25 PM
 -- Server version: 5.7.14
 -- PHP Version: 7.0.10
 
@@ -61,11 +61,8 @@ CREATE TABLE `faculty` (
 --
 
 INSERT INTO `faculty` (`id`, `name`, `designation`, `description`, `image`) VALUES
-(61, 'Gmj', 'Zoology', 'Lecturer', 'terminal.jpg'),
-(60, 'Djm', 'Infotech', 'Lecturer', '349621.jpg'),
-(57, 'Sa', 'Economics', 'Lecturer', 'Kamal.jpg'),
-(58, 'Ibm', 'Computer Science', 'Lecturer', 'intel-hades-canyon-multiple-monitors-thunderbolt-3-newegg-2.jpg'),
-(59, 'Alj', 'Infotech', 'Lecturer', 'skyler-gerald-EcBhESiRYpc-unsplash.jpg');
+(1, 'Sas', 'Economics', 'Lecturer', '349621.jpg'),
+(18, 'Sas', 'Computer Science', 'Lecturer', 'capyvara-qDBtLH0vpfg-unsplash.jpg');
 
 -- --------------------------------------------------------
 
@@ -126,7 +123,7 @@ ALTER TABLE `aboutus`
 -- AUTO_INCREMENT for table `faculty`
 --
 ALTER TABLE `faculty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `register`
 --

@@ -75,7 +75,8 @@ include('includes/navbar.php');
 					-->
                       <div class="form-group">
                         <label for="dsc">Description:</label>
-                        <input type="text" name="descrition" class="form-control" placeholder="Enter descrition">
+                        <textarea type="text" name="descrition" class="form-control" >The description </textarea>
+                        
                       </div>
                       <div class="form-group">
                         <label for="links">Links:</label>
