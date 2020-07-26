@@ -23,7 +23,7 @@ include('includes/navbar.php');
 
         <div class="container">
           <!-- Trigger the modal with a button -->
-          <h3>Academics - Departments (Category)
+          <h3 class="text-primary" > Academics - Departments (Category)
             <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal"> ADD</button>
           </h6>
 
@@ -49,7 +49,7 @@ include('includes/navbar.php');
               <div class="modal-content">
 
                 <div class="modal-header">
-                  <div>Add Departments</div>
+                  <div class="text-primary">Add Departments</div>
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                   <h4 class="modal-title "></h4>
                 </div>
