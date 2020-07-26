@@ -23,7 +23,7 @@ include('includes/navbar.php');
 
         <div class="container">
           <!-- Trigger the modal with a button -->
-          <h3>Academics - Departments
+          <h3>Academics - Departments (Category)
             <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal"> ADD</button>
           </h6>
 
@@ -91,56 +91,87 @@ include('includes/navbar.php');
 
           
           
-          <?php
-            //1) Connect to data base
-            //2) Select data base
-            //3) Perform query
-            //4) Use return data
-            //5) Close connection
-           
+		<table class="table table-striped">
 
-          ?>
+		<?php
+		//1) Connect to data base
+		//2) Select data base
+		//3) Perform query
+		//4) Use return data
+		//5) Close connection
+		// $connection = mysqli_connect("localhost", "root", "", "adminpanel");
+		// if (!$connection) {
+		//   die("Database connection fail: ". mysqli_error($connection));
+		// }
+
+		// $db_select = mysqli_select_db($connection, "adminpanel");
+		// if (!$db_select) {
+		//   die("Database selection fail: ". mysqli_error($connection));
+		// }
+
+		$result = mysqli_query($connection, "SELECT * FROM dept_category ORDER BY id ASC");
+		if (!$result) {
+		  die("Query failed: ". mysqli_error($connection));
+		}
+
+		?>
+
+		<thead>
+		  <tr>
+		    <th>ID</th>
+		    <th>Dept Name</th>
+		    <th>Description</th>
+		    <th>Image</th>
+		    <th>Edit</th>
+		    <th>Delete</th>
+		  </tr>
+		</thead>
+		<tbody>
 
 
-                        
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
+		<?php
 
-         
+		if (mysqli_num_rows($result) > 0) {
+		  while ($row = mysqli_fetch_assoc($result)) {
+		    
+		?>
 
-              <tr>
-                <td>1</td>
-                <td>Computer Department </td>
-                <td>Department of Computer Science</td>                
-                <td>Image will apear here</td>
-                <td>
-                  <form action="about_us_edit.php" method="POST">
-                    <input type="hidden" name="edit_id" value="" >
-                    <button type="submit" name="edit_btn" class="btn btn-success">EDIT</button>   
-                  </form>
-                </td>
-                <td>
-                  <form action="code.php" method="POST">
-                    <input type="hidden" name="delete_id" value="">
-                    <button type="submit" name="aboutus_deletebtn"  class="btn btn-danger">DELETE</button> 
-                  </form>
-                </td>
-              </tr>
+		  <tr>
+		    <td><?php echo $row['id']; ?></td>
+		    <td><?php echo $row['name']; ?></td>
+		    <td><?php echo $row['description']; ?></td>                
+		    <td> <?php echo '<img src="upload/department/' . $row['image'] . '" width="100px" height="100px" alt="image">' ?></td>
+		    <td>
+		      <form action="department_edit.php" method="POST" >
+		        <input type="hidden" name="edit_id" value="<?php echo $row['id']; ?>" >
+		        <button type="submit" name="departments_edit_btn" class="btn btn-success">EDIT</button>   
+		      </form>
+		    </td>
+		   
+		    <td>
+		      <form action="code.php" method="POST">
+		        <input type="hidden" name="delete_id" value="<?php echo $row['id']; ?>" >
+		        <button type="submit" name="dept_delete_btn"  class="btn btn-danger">DELETE</button> 
+		      </form>
+		    </td>
+		  </tr>
 
-          
+		<?php
 
-            </tbody>
-          </table>
+		  } 
+
+		} else {
+
+		  echo "<h1><strong>". "No Record found". "</strong></h1>";
+
+		}
+
+		?>
+
+
+
+		</tbody>
+		</table>
 
           
 

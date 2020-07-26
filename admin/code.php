@@ -63,6 +63,115 @@ include('security.php');
 
 
 
+	//Coding for Department Edit ------------------------------------------
+
+	if (isset($_POST['dept_update_btn'])) {
+		$id = $_POST['edit_id'];
+		$edit_name = $_POST['edit_name'];
+		$edit_description = $_POST['edit_description'];
+		
+		$edit_dept_image = $_FILES['dept_image']['name'];
+
+
+		// if ($edit_faculty_image) {
+		// 	die($edit_faculty_image);
+		// }
+
+		// echo "<pre>" . var_dump($_POST) . "</pre>";
+		
+		// <pre></pre>
+
+		// print_r($edit_dept_image);
+
+		// get_defined_vars($validate_img_extension);
+
+		// gettype($validate_img_extension);
+
+		$department_result = mysqli_query($connection, "SELECT * FROM dept_category WHERE id='$id' ");
+			
+		foreach ($department_result as $fa_row) {
+			// echo $fa_row['image'];
+			
+			if ($edit_dept_image == NULL ) {
+				
+				// Update with existing Image
+				$image_data = $fa_row['image'];
+
+			} else {
+
+				// Update with new Image and delete Old image
+				if ($image_path = "upload/department/" . $fa_row['image']) {
+					unlink($image_path);
+					$image_data = $edit_dept_image;
+
+				}
+				
+			}
+		}
+
+		$result = mysqli_query($connection, "UPDATE dept_category SET id='$id', name='$edit_name', description='$edit_description', image='$image_data' WHERE id= '$id' ");
+		  	if (!$result) {
+		  	die("Query Update failed: ". mysqli_error($connection));
+		}
+
+		if ($result) {
+
+			if ($edit_dept_image == NULL ) {
+				
+				// Update with existing Image.............
+				$_SESSION['success'] = "<div class='alert alert-success'><strong>". "Department Updated! with existing Image". "</strong></div>";
+				header('Location: departments.php');
+
+			} else {
+
+				// Update with new Image and deleted Old image...........
+				//Not that the / has to be infront of upload not at the back....
+				move_uploaded_file($_FILES["dept_image"]["tmp_name"], "upload/department/" . basename($_FILES["dept_image"]["name"]));
+				//echo "Saved";
+				$_SESSION['success'] = "<div class='alert alert-success'><strong>". "Department Updated!". "</strong></div>";
+				header('Location: departments.php');
+
+			}
+			
+
+		} 	else{
+
+			$_SESSION['status'] = "Faculty Not Updated!";
+			header('Location: departments.php');
+
+		}
+
+	}	
+
+	
+
+
+	//Coding for Department Delete ------------------------------------------
+	if (isset($_POST['dept_delete_btn'])) {
+		$id = $_POST['delete_id'];
+
+		// echo "<pre>" . var_dump($_POST) . "</pre>";
+
+		$result = mysqli_query($connection, "DELETE FROM dept_category WHERE id='$id' ");
+
+		if ($result) {
+
+			$_SESSION['success'] = "<div class='alert alert-danger'><strong>". "Department Deleted!". "</strong></div>";
+			header('Location: departments.php');
+
+		} else {
+
+			$_SESSION['status'] = "Department Not Deleted!";
+			header('Location: departments.php');
+
+		}
+	}
+
+
+
+
+
+
 
 
 
@@ -259,6 +368,23 @@ if (isset($_POST['faculty_deletebtn'])) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	//Coding for Register------------------------------------------
 	
 	//$connection = mysqli_connect("localhost", "root", "", "adminpanel");
@@ -397,6 +523,29 @@ if (isset($_POST['deletebtn'])) {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

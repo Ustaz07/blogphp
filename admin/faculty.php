@@ -93,9 +93,12 @@ include('includes/navbar.php');
           
         </div>
         <!-- End Modal -->
+    
 
-          
-          
+
+                        
+          <table class="table table-striped">
+
           <?php
             //1) Connect to data base
             //2) Select data base
@@ -119,9 +122,6 @@ include('includes/navbar.php');
 
           ?>
 
-
-                        
-          <table class="table table-striped">
             <thead>
               <tr>
                 <th>ID</th>
